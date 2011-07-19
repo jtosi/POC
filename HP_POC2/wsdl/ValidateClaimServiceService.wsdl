@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ValidateClaimServiceService" targetNamespace="http://webservices.samples.jboss.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://webservices.samples.jboss.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://webservices.samples.jboss.org/" targetNamespace="http://webservices.samples.jboss.org/" version="1.0">
+<xs:element name="validateClaim" type="tns:validateClaim"/>
+<xs:element name="validateClaimResponse" type="tns:validateClaimResponse"/>
+<xs:complexType name="validateClaim">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:claim"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="claim">
+<xs:sequence>
+<xs:element minOccurs="0" name="claimDate" type="xs:dateTime"/>
+<xs:element name="claimID" type="xs:long"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="claimItems" nillable="true" type="tns:claimItem"/>
+<xs:element minOccurs="0" name="partnerInfo" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="claimItem">
+<xs:sequence>
+<xs:element name="claimItemId" type="xs:long"/>
+<xs:element minOccurs="0" name="productNumber" type="xs:string"/>
+<xs:element name="quantity" type="xs:int"/>
+<xs:element name="rebateAmount" type="xs:double"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="validationResults" nillable="true" type="tns:validation"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="validation">
+<xs:sequence>
+<xs:element minOccurs="0" name="code" type="xs:string"/>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="validateClaimResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="validateClaimResponse">
+    <wsdl:part name="parameters" element="tns:validateClaimResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validateClaim">
+    <wsdl:part name="parameters" element="tns:validateClaim">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ValidateClaimService">
+    <wsdl:operation name="validateClaim">
+      <wsdl:input name="validateClaim" message="tns:validateClaim">
+    </wsdl:input>
+      <wsdl:output name="validateClaimResponse" message="tns:validateClaimResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ValidateClaimServiceServiceSoapBinding" type="tns:ValidateClaimService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="validateClaim">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="validateClaim">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="validateClaimResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ValidateClaimServiceService">
+    <wsdl:port name="ValidateClaimServicePort" binding="tns:ValidateClaimServiceServiceSoapBinding">
+      <soap:address location="http://localhost:9090/ValidateClaimServicePort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

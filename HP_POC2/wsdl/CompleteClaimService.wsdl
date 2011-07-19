@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="CompleteClaimService" targetNamespace="http://webservices.samples.jboss.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://webservices.samples.jboss.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://webservices.samples.jboss.org/" targetNamespace="http://webservices.samples.jboss.org/" version="1.0">
+<xs:element name="completeClaim" type="tns:completeClaim"/>
+<xs:element name="completeClaimResponse" type="tns:completeClaimResponse"/>
+<xs:complexType name="completeClaim">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:claim"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="claim">
+<xs:sequence>
+<xs:element minOccurs="0" name="claimDate" type="xs:dateTime"/>
+<xs:element name="claimID" type="xs:long"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="claimItems" nillable="true" type="tns:claimItem"/>
+<xs:element minOccurs="0" name="partnerInfo" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="claimItem">
+<xs:sequence>
+<xs:element name="claimItemId" type="xs:long"/>
+<xs:element minOccurs="0" name="productNumber" type="xs:string"/>
+<xs:element name="quantity" type="xs:int"/>
+<xs:element name="rebateAmount" type="xs:double"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="validationResults" nillable="true" type="tns:validation"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="validation">
+<xs:sequence>
+<xs:element minOccurs="0" name="code" type="xs:string"/>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="completeClaimResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="completeClaimResponse">
+    <wsdl:part name="parameters" element="tns:completeClaimResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="completeClaim">
+    <wsdl:part name="parameters" element="tns:completeClaim">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CompleteClaim">
+    <wsdl:operation name="completeClaim">
+      <wsdl:input name="completeClaim" message="tns:completeClaim">
+    </wsdl:input>
+      <wsdl:output name="completeClaimResponse" message="tns:completeClaimResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CompleteClaimServiceSoapBinding" type="tns:CompleteClaim">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="completeClaim">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="completeClaim">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="completeClaimResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CompleteClaimService">
+    <wsdl:port name="CompleteClaimPort" binding="tns:CompleteClaimServiceSoapBinding">
+      <soap:address location="http://localhost:9090/CompleteClaimPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
